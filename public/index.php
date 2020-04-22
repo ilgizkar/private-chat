@@ -8,7 +8,6 @@
  */
 
 define('LARAVEL_START', microtime(true));
-gearman_worker_grab_job();
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
