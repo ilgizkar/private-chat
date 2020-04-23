@@ -6,10 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Session extends Model
 {
-    protected $fillable = [
-      'user1_id',
-      'user2_id'
-    ];
+    protected $guarded = [];
 
     public function chats()
     {
@@ -19,5 +16,15 @@ class Session extends Model
     public function messages()
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function deleteChats()
+    {
+        $this->chats()->where('user_id', auth()->id())->delete();
+    }
+
+    public function deleteMessages()
+    {
+        $this->messages()->delete();
     }
 }

@@ -8,6 +8,7 @@
                             <li class="list-group-item" v-for="friend in friends" :key="friend.id">
                                 <a href="" @click.prevent="openChat(friend)">
                                     {{ friend.name }}
+                                    <span class="text-danger" v-if="friend.session && (friend.session.unreadCount > 0)">+{{ friend.session.unreadCount }}</span>
                                 </a>
                                 <i class="fa fa-circle float-right text-success" aria-hidden="true" v-if="friend.online"></i>
                             </li>
@@ -40,12 +41,25 @@
                 friend.session.open = false
             },
             getFriends() {
-                axios.post('/getFriends').then(res => this.friends = res.data.data)
+                axios.post('/getFriends').then(res => {
+                    this.friends = res.data.data;
+                    this.friends.forEach(friend => {
+                        if(friend.session) {
+                            this.listenForEverySession(friend)
+                        }
+                    })
+                })
+            },
+            listenForEverySession(friend) {
+                Echo.private(`Chat.${friend.session.id}`).listen('PrivateChatEvent', e => {
+                    friend.session.open ? '' : friend.session.unreadCount++
+                });
             },
             openChat(friend) {
                 if(friend.session) {
                    this.closeAll();
-                    friend.session.open = true
+                    friend.session.open = true;
+                    friend.session.unreadCount = 0;
                 } else {
                     this.createSession(friend);
                 }
@@ -68,6 +82,7 @@
             Echo.channel('Chat').listen('SessionEvent', e => {
                let friend = this.friends.find(friend => friend.id == e.session_by);
                friend.session = e.session;
+               this.listenForEverySession(friend);
             });
             Echo.join('Chat')
                 .here((users) => {

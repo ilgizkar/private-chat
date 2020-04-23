@@ -18,6 +18,8 @@ class CreateSessionTable extends Migration
             $table->unsignedInteger('user1_id');
             $table->unsignedInteger('user2_id');
             $table->unique(['user2_id', 'user1_id']);
+            $table->boolean('block')->default(0);
+            $table->unsignedInteger('blocked_id')->nullable();
             $table->timestamps();
         });
     }
