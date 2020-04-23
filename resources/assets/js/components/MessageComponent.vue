@@ -2,7 +2,7 @@
     <div class="card card-default chat-box">
         <div class="card-header">
             <b :class="{'text-danger':session_block}">
-                Гузель
+                {{ friend.name }}
                 <span v-if="session_block"> (Заблокирован)</span>
             </b>
 
@@ -22,14 +22,14 @@
             </div>
         </div>
         <div class="card-body" v-chat-scroll>
-            <p class="card-text" v-for="chat in chats" :key="chat.message">
+            <p class="card-text" :class="{'text-right': chat.type == 0 }" v-for="chat in chats" :key="chat.message">
                 {{ chat.message }}
             </p>
         </div>
         <form class="card-footer" @submit.prevent="send">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Введите текст сообщения"
-                :disabled="session_block">
+                :disabled="session_block" v-model="message">
             </div>
         </form>
     </div>
@@ -37,15 +37,27 @@
 
 <script>
     export default {
+        props: ['friend'],
         data() {
             return {
                 chats: [],
-                session_block: false
+                session_block: false,
+                message: null
             }
         },
         methods: {
             send() {
-                console.log('wwww')
+                if(this.message) {
+                    this.pushToChats(this.message);
+                    axios.post(`/send/${this.friend.session.id}`, {
+                        contents: this.message,
+                        to_user: this.friend.id
+                    });
+                    this.message = null
+                }
+            },
+            pushToChats(message){
+                this.chats.push({message: message, type: 0, sent_at: 'Только что'});
             },
             close() {
                 this.$emit('close')
@@ -58,14 +70,15 @@
             },
             unblock() {
                 this.session_block = false
+            },
+            getAllMessages() {
+                axios
+                    .post(`/session/${this.friend.session.id}/chats`)
+                    .then(res => (this.chats = res.data.data));
             }
         },
         created() {
-            this.chats.push(
-                {message: 'Привет'},
-                {message: 'Как дела?'},
-                {message: 'Что делаешь?'},
-                )
+            this.getAllMessages();
         }
     }
 </script>
