@@ -40,25 +40,21 @@
             close(friend) {
                 friend.session.open = false
             },
+            clickFunc(friend) {
+                window.open('https://ilgizkar.ru/home', '_blank');
+                this.openChat(friend);
+            },
             sendNotification(title, options, friend) {
                 if (!("Notification" in window)) {
                     alert('Ваш браузер не поддерживает HTML Notifications, его необходимо обновить.');
                 } else if (Notification.permission === "granted") {
                     var notification = new Notification(title, options);
-                    function clickFunc() {
-                        window.open('https://ilgizkar.ru/home', '_blank');
-                        this.openChat(friend);
-                    }
-                    notification.onclick = clickFunc;
+                    notification.onclick =  this.clickFunc(friend);
                 } else if (Notification.permission !== 'denied') {
                     Notification.requestPermission(function (permission) {
                         if (permission === "granted") {
                             var notification = new Notification(title, options);
-                            function clickFunc() {
-                                window.open('https://ilgizkar.ru/home', '_blank');
-                                this.close();
-                            }
-                            notification.onclick = clickFunc;
+                            notification.onclick =  this.clickFunc(friend);
                         } else {
                             alert('Вы запретили показывать уведомления');
                         }
