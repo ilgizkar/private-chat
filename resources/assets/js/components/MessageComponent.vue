@@ -1,33 +1,48 @@
 <template>
     <div class="card card-default chat-box">
+        <div class="device-md visible-md"></div>
         <div class="card-header">
-            <b :class="{'text-danger':session.block}">
-                {{ friend.name }}
-                <span style="font-weight:100; font-style: italic;" v-if="isTyping">  пишет...</span>
-                <span v-if="session.block"> (Заблокирован)</span>
-            </b>
+            <div class="row">
+                <div class="col-md-1 avatar">
+                    <div class="heading-avatar-icon">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png">
+                    </div>
+                </div>
+                <div class="col-md-5 user-name">
+                    <b :class="{'text-danger':session.block}">
+                        {{ friend.name }}
+                        <span style="font-weight:100; font-style: italic;" v-if="isTyping">  пишет...</span>
+                        <span v-if="session.block"> (Заблокирован)</span>
+                    </b>
+                </div>
+                <div class="col-md-6 tools">
+                    <a href="" title="Закрыть диалоговое окно" @click.prevent="close">
+                        <i class="fa fa-times mt3 float-right" aria-hidden="true"></i>
+                    </a>
 
-            <a href="" title="Закрыть диалоговое окно" @click.prevent="close">
-                <i class="fa fa-times mt3 float-right" aria-hidden="true"></i>
-            </a>
-
-            <div class="dropdown float-right mr-4">
-                <a href="" title="Возможные действия" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" @click.prevent="unblock" v-if="session.block && can">Разблокировать</a>
-                    <a class="dropdown-item" href="#" @click.prevent="block" v-if="!session.block">Заблокировать</a>
-                    <a class="dropdown-item" href="#" @click.prevent="clear">Очистить диалог</a>
+                    <div class="dropdown float-right mr-4">
+                        <a href="" title="Возможные действия" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#" @click.prevent="unblock" v-if="session.block && can">Разблокировать</a>
+                            <a class="dropdown-item" href="#" @click.prevent="block" v-if="!session.block">Заблокировать</a>
+                            <a class="dropdown-item" href="#" @click.prevent="clear">Очистить диалог</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="card-body" v-chat-scroll>
-            <p class="card-text" :class="{'text-right': chat.type == 0, 'text-success': chat.read_at != null}" v-for="chat in chats" :key="chat.id">
-                {{ chat.message }}
-                <br>
-                <span style="font-size: 8px;">{{ chat.read_at}}</span>
-            </p>
+            <div class="card-text" :class="{
+              'text-success': chat.read_at != null
+              }" v-for="chat in chats" :key="chat.id">
+                <p :class="{'sender': chat.type == 0, 'to-user': chat.type == 1}">
+                    {{ chat.message }}
+                    <br>
+                    <span style="font-size: 8px;">{{ chat.read_at}}</span>
+                </p>
+            </div>
         </div>
         <form class="card-footer" @submit.prevent="send">
             <div class="form-group">
@@ -139,15 +154,64 @@
 
 <style scoped>
     .chat-box {
-        height: 400px;
+        height: 500px;
     }
     .card-body {
         overflow-y:scroll;
+        display: grid;
+        background-image: url('https://static.tumblr.com/c7019329e77254042f874bede15c1222/txzha1z/OxNnokise/tumblr_static_tumblr_static_4gtieatoh3eo8ccwggco0k0cc_focused_v3.jpg');
     }
     .mt3 {
         margin-top: 3px;
     }
     .dropdown-menu {
         left: -55px !important;
+    }
+    .sender {
+        background: #dcf8c6;
+        min-width: 200px;
+        max-width: 500px;
+        float: right;
+        padding: 4px 10px 7px !important;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+        border-radius: 10px 10px 0 10px;
+        min-height: 50px;
+    }
+    .to-user {
+        background: white;
+        width: max-content;
+        min-width: 200px;
+        max-width: 500px;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+        padding: 4px 10px 7px !important;
+        border-radius: 10px 10px 10px 0;
+        min-height: 50px;
+    }
+    @media screen and (max-device-width: 480px) {
+        .to-user {
+            max-width: 200px;
+        }
+        .sender {
+            max-width: 200px;
+        }
+        .user-name {
+            width: 55%;
+        }
+        .avatar {
+            width: 22%;
+        }
+        .tools {
+            width: 23%;
+        }
+    }
+    img {
+        height: 40px;
+        border-radius: 50%;
+    }
+    .user-name, .tools {
+        padding: 10px 0 0 0;
+    }
+    .tools {
+        margin-left: -20px;
     }
 </style>
