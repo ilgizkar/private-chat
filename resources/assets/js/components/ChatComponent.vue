@@ -45,7 +45,6 @@
                     alert('Ваш браузер не поддерживает HTML Notifications, его необходимо обновить.');
                 } else if (Notification.permission === "granted") {
                     var notification = new Notification(title, options);
-
                     function clickFunc() { alert('Пользователь кликнул на уведомление');}
                     notification.onclick = clickFunc;
                 } else if (Notification.permission !== 'denied') {
@@ -54,7 +53,7 @@
                             var notification = new Notification(title, options);
 
                         } else {
-                            alert('Вы запретили показывать уведомления'); // Юзер отклонил наш запрос на показ уведомлений
+                            alert('Вы запретили показывать уведомления');
                         }
                     });
                 } else {
@@ -82,7 +81,18 @@
                         return ''
                     } else {
                         friend.session.unreadCount++;
+                        console.log(friend.session)
                         this.audioNotyPlay();
+                        this.sendNotification('Вам новое сообщение!', {
+                            body: 'Кликните сюда для перехода к диалогу',
+                            //icon: 'icon.jpg',
+                            dir: 'auto',
+                            onClick: function () {
+                                window.location.href = 'https://ilgizkar.ru/home';
+                                window.focus();
+                                this.close();
+                            }
+                        });
                     }
                 });
             },
@@ -91,11 +101,6 @@
                    this.closeAll();
                     friend.session.open = true;
                     friend.session.unreadCount = 0;
-                    this.sendNotification('Верните Линуса!', {
-                        body: 'Тестирование HTML5 Notifications',
-                        icon: 'icon.jpg',
-                        dir: 'auto'
-                    });
                 } else {
                     this.createSession(friend);
                 }
