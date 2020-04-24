@@ -3,16 +3,17 @@
         <div class="card-header">
             <b :class="{'text-danger':session.block}">
                 {{ friend.name }}
-                <span v-if="isTyping"> набирает сообщение ...</span>
+                <span v-if="isTyping"> пишет...</span>
                 <span v-if="session.block"> (Заблокирован)</span>
             </b>
+            ввввавуапк
 
-            <a href="" @click.prevent="close">
+            <a href="" title="Закрыть диалоговое окно" @click.prevent="close">
                 <i class="fa fa-times mt3 float-right" aria-hidden="true"></i>
             </a>
 
             <div class="dropdown float-right mr-4">
-                <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a href="" title="Возможные действия" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -146,5 +147,8 @@
     }
     .mt3 {
         margin-top: 3px;
+    }
+    .dropdown-menu {
+        left: -55px !important;
     }
 </style>

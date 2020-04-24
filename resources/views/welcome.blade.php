@@ -78,8 +78,9 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Секретный ЧАТ
+                <div class="container">
+                    <h1>Секретный ЧАТ</h1>
+                    <h3>by ilgiz</h3>
                 </div>
             </div>
         </div>
