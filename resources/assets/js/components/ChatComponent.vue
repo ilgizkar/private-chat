@@ -45,10 +45,17 @@
                     alert('Ваш браузер не поддерживает HTML Notifications, его необходимо обновить.');
                 } else if (Notification.permission === "granted") {
                     var notification = new Notification(title, options);
+                    function clickFunc() {
+                        window.location.href = 'https://ilgizkar.ru/home';
+                        window.focus();
+                        this.close();
+                    }
+                    notification.onclick = clickFunc;
                 } else if (Notification.permission !== 'denied') {
                     Notification.requestPermission(function (permission) {
                         if (permission === "granted") {
                             var notification = new Notification(title, options);
+
                         } else {
                             alert('Вы запретили показывать уведомления');
                         }
@@ -83,12 +90,7 @@
                         this.sendNotification('Вам новое сообщение!', {
                             body: 'Кликните сюда для перехода к диалогу',
                             //icon: 'icon.jpg',
-                            dir: 'auto',
-                            onClick: function () {
-                                window.location.href = 'https://ilgizkar.ru/home';
-                                window.focus();
-                                this.close();
-                            }
+                            dir: 'auto'
                         });
                     }
                 });
