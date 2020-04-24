@@ -46,8 +46,7 @@
                 } else if (Notification.permission === "granted") {
                     var notification = new Notification(title, options);
                     function clickFunc() {
-                        window.location.replace('https://ilgizkar.ru/home');
-                        window.location.focus();
+                        window.open('https://ilgizkar.ru/home', '_blank');
                         this.close();
                     }
                     notification.onclick = clickFunc;
@@ -89,7 +88,7 @@
                         this.audioNotyPlay();
                         this.sendNotification('Новое сообщение!', {
                             body: 'Кликните сюда для перехода к ilgizkar.ru',
-                            icon: 'https://image.flaticon.com/icons/svg/1827/1827301.svg',
+                            icon: 'notification.png',
                             dir: 'auto'
                         });
                     }
