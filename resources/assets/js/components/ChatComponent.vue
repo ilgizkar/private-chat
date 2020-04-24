@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-3  mb-20">
                 <div class="card card-default">
-                    <div class="card-header">Приватный чат</div>
+                    <div class="card-header">Пользователи</div>
                         <ul class="list-group">
                             <li class="list-group-item" v-for="friend in friends" :key="friend.id">
                                 <a href="" @click.prevent="openChat(friend)">
