@@ -10,7 +10,7 @@
                                     {{ friend.name }}
                                     <span class="text-danger" v-if="friend.session && (friend.session.unreadCount > 0)">+{{ friend.session.unreadCount }}</span>
                                 </a>
-                                <i class="fa fa-circle float-right text-success" aria-hidden="true" v-if="friend.online"></i>
+                                <i class="fa fa-circle mt5 float-right text-success" aria-hidden="true" v-if="friend.online"></i>
                             </li>
                         </ul>
                 </div>
@@ -40,21 +40,31 @@
             close(friend) {
                 friend.session.open = false
             },
+            sendNotification(title, options) {
+                if (!("Notification" in window)) {
+                    alert('Ваш браузер не поддерживает HTML Notifications, его необходимо обновить.');
+                } else if (Notification.permission === "granted") {
+                    var notification = new Notification(title, options);
+
+                    function clickFunc() { alert('Пользователь кликнул на уведомление');}
+                    notification.onclick = clickFunc;
+                } else if (Notification.permission !== 'denied') {
+                    Notification.requestPermission(function (permission) {
+                        if (permission === "granted") {
+                            var notification = new Notification(title, options);
+
+                        } else {
+                            alert('Вы запретили показывать уведомления'); // Юзер отклонил наш запрос на показ уведомлений
+                        }
+                    });
+                } else {
+                    console.log(Notification.permission)
+                }
+            },
             audioNotyPlay() {
                 var audio = new Audio(); // Создаём новый элемент Audio
                 audio.src = 'https://audiokaif.ru/wp-content/uploads/2019/04/7-%D0%A1%D0%BA%D0%B0%D1%87%D0%B0%D1%82%D1%8C-%D0%B7%D0%B2%D1%83%D0%BA-%D0%BF%D1%80%D0%B8%D1%88%D0%BB%D0%BE-%D1%81%D0%BE%D0%BE%D0%B1%D1%89%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BD%D0%B0-%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%83%D1%8E-%D0%BF%D0%BE%D1%87%D1%82%D1%83.mp3'; // Указываем путь к звуку "клика"
                 audio.autoplay = true; // Автоматически запускаем
-            },
-            pushCreate(){
-                Push.create('dddd', {
-                    body: 'jjjj',
-                    timeout: 15000,
-                    onClick: function () {
-                        window.location.href = 'fff';
-                        window.focus();
-                        this.close();
-                    }
-                });
             },
             getFriends() {
                 axios.post('/getFriends').then(res => {
@@ -81,6 +91,11 @@
                    this.closeAll();
                     friend.session.open = true;
                     friend.session.unreadCount = 0;
+                    this.sendNotification('Верните Линуса!', {
+                        body: 'Тестирование HTML5 Notifications',
+                        icon: 'icon.jpg',
+                        dir: 'auto'
+                    });
                 } else {
                     this.createSession(friend);
                 }
@@ -135,6 +150,9 @@
 <style scoped>
     .mb-20 {
         margin-bottom: 20px;
+    }
+    .mt5 {
+        margin-top: 5px;
     }
 </style>
 

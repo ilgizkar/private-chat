@@ -7,6 +7,7 @@ route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/cabinet', 'CabinetController@index')->name('cabinet');
 
 Route::post('/getFriends', 'HomeController@getFriends');
 Route::post('/session/create', 'SessionController@create');
