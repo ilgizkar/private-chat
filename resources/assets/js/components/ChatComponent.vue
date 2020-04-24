@@ -46,7 +46,7 @@
                 } else if (Notification.permission === "granted") {
                     var notification = new Notification(title, options);
                     function clickFunc() {
-                        window.location.href = 'https://ilgizkar.ru/home';
+                        window.location.replace('https://ilgizkar.ru/home');
                         window.focus();
                         this.close();
                     }
@@ -85,11 +85,11 @@
                         return ''
                     } else {
                         friend.session.unreadCount++;
-                        console.log(friend.session)
+                        console.log(friend.session);
                         this.audioNotyPlay();
-                        this.sendNotification('Вам новое сообщение!', {
-                            body: 'Кликните сюда для перехода к диалогу',
-                            //icon: 'icon.jpg',
+                        this.sendNotification('Новое сообщение!', {
+                            body: 'Кликните сюда для перехода к ilgizkar.ru',
+                            icon: 'https://image.flaticon.com/icons/svg/1827/1827301.svg',
                             dir: 'auto'
                         });
                     }
