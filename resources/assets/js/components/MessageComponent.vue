@@ -3,10 +3,9 @@
         <div class="card-header">
             <b :class="{'text-danger':session.block}">
                 {{ friend.name }}
-                <span v-if="isTyping"> пишет...</span>
+                <span style="font-weight:100; font-style: italic;" v-if="isTyping">  пишет...</span>
                 <span v-if="session.block"> (Заблокирован)</span>
             </b>
-            ввввавуапк
 
             <a href="" title="Закрыть диалоговое окно" @click.prevent="close">
                 <i class="fa fa-times mt3 float-right" aria-hidden="true"></i>
