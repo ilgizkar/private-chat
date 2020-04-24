@@ -40,9 +40,15 @@
             close(friend) {
                 friend.session.open = false
             },
+            audioNotyPlay() {
+                var audio = new Audio(); // Создаём новый элемент Audio
+                audio.src = 'http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3'; // Указываем путь к звуку "клика"
+                audio.autoplay = true; // Автоматически запускаем
+            },
             getFriends() {
                 axios.post('/getFriends').then(res => {
                     this.friends = res.data.data;
+                    this.audioNotyPlay();
                     this.friends.forEach(friend => {
                         if(friend.session) {
                             this.listenForEverySession(friend)
