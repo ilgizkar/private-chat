@@ -48,7 +48,6 @@
             getFriends() {
                 axios.post('/getFriends').then(res => {
                     this.friends = res.data.data;
-                    this.audioNotyPlay();
                     this.friends.forEach(friend => {
                         if(friend.session) {
                             this.listenForEverySession(friend)
@@ -58,7 +57,12 @@
             },
             listenForEverySession(friend) {
                 Echo.private(`Chat.${friend.session.id}`).listen('PrivateChatEvent', e => {
-                    friend.session.open ? '' : friend.session.unreadCount++
+                    if(friend.session.open) {
+                        return ''
+                    } else {
+                        friend.session.unreadCount++;
+                        this.audioNotyPlay();
+                    }
                 });
             },
             openChat(friend) {
