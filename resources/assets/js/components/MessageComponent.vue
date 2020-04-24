@@ -8,7 +8,7 @@
             </b>
 
             <a href="" @click.prevent="close">
-                <i class="fa fa-times float-right" aria-hidden="true"></i>
+                <i class="fa fa-times mt3 float-right" aria-hidden="true"></i>
             </a>
 
             <div class="dropdown float-right mr-4">
@@ -32,7 +32,7 @@
         <form class="card-footer" @submit.prevent="send">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Введите текст сообщения"
-                :disabled="session.block != 0" v-model="message">
+                :disabled="session.block == 1" v-model="message">
             </div>
         </form>
     </div>
@@ -143,5 +143,8 @@
     }
     .card-body {
         overflow-y:scroll;
+    }
+    .mt3 {
+        margin-top: 3px;
     }
 </style>
