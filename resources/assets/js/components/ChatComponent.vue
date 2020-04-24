@@ -40,21 +40,25 @@
             close(friend) {
                 friend.session.open = false
             },
-            clickFunc(friend) {
-                window.open('https://ilgizkar.ru/home', '_blank');
-                this.openChat(friend);
-            },
-            sendNotification(title, options, friend) {
+            sendNotification(title, options) {
                 if (!("Notification" in window)) {
                     alert('Ваш браузер не поддерживает HTML Notifications, его необходимо обновить.');
                 } else if (Notification.permission === "granted") {
                     var notification = new Notification(title, options);
-                    notification.onclick =  this.clickFunc(friend);
+                    function clickFunc() {
+                        window.open('https://ilgizkar.ru/home', '_blank');
+                        this.close();
+                    }
+                    notification.onclick = clickFunc;
                 } else if (Notification.permission !== 'denied') {
                     Notification.requestPermission(function (permission) {
                         if (permission === "granted") {
                             var notification = new Notification(title, options);
-                            notification.onclick =  this.clickFunc(friend);
+                            function clickFunc() {
+                                window.open('https://ilgizkar.ru/home', '_blank');
+                                this.close();
+                            }
+                            notification.onclick = clickFunc;
                         } else {
                             alert('Вы запретили показывать уведомления');
                         }
@@ -86,11 +90,11 @@
                         friend.session.unreadCount++;
                         console.log(friend.session);
                         this.audioNotyPlay();
-                        this.sendNotification('Новое сообщение!', {
-                            body: 'Кликните сюда для перехода к ilgizkar.ru',
+                        this.sendNotification('Вот это поворот!', {
+                            body: 'Тебе кто то написал))',
                             icon: 'https://yt3.ggpht.com/a/AATXAJxbAAPqZhYxp2agXMNBBmXqPo75xP9frYGduQ=s900-c-k-c0xffffffff-no-rj-mo',
                             dir: 'auto'
-                        }, friend);
+                        });
                     }
                 });
             },
