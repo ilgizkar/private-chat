@@ -47,7 +47,7 @@
                     var notification = new Notification(title, options);
                     function clickFunc() {
                         window.location.replace('https://ilgizkar.ru/home');
-                        window.focus();
+                        window.location.focus();
                         this.close();
                     }
                     notification.onclick = clickFunc;
