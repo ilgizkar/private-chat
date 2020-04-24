@@ -6,7 +6,7 @@
                     <div class="card-header">Пользователи</div>
                         <ul class="list-group">
                             <li class="list-group-item" v-for="friend in friends" :key="friend.id">
-                                <a href="" @click.prevent="openChat(friend)">
+                                <a href="" title="Открыть диалог" @click.prevent="openChat(friend)">
                                     {{ friend.name }}
                                     <span class="text-danger" v-if="friend.session && (friend.session.unreadCount > 0)">+{{ friend.session.unreadCount }}</span>
                                 </a>
@@ -160,6 +160,10 @@
     }
     .mt5 {
         margin-top: 5px;
+        font-size: 10px;
+    }
+    .list-group-item>a, .card-header {
+        color: #919191;
     }
 </style>
 
