@@ -177,6 +177,7 @@
     }
     .flex {
         display: flex;
+        padding-bottom: 0;
     }
     .sender {
         background: #dcf8c6;
