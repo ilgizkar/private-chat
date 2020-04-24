@@ -44,10 +44,13 @@
                 </p>
             </div>
         </div>
-        <form class="card-footer" @submit.prevent="send">
-            <div class="form-group">
+        <form class="card-footer flex" @submit.prevent="send">
+            <div class="form-group" style="width: 100%">
                 <input type="text" class="form-control" placeholder="Введите текст сообщения"
                 :disabled="session.block == 1" v-model="message">
+            </div>
+            <div class="ml15">
+                <i class="fa fa-send fa-2x" @click.prevent="send" title="Отправить" aria-hidden="true"></i>
             </div>
         </form>
     </div>
@@ -164,8 +167,16 @@
     .mt3 {
         margin-top: 3px;
     }
+    .ml15 {
+        margin-left: 15px;
+        color: #3db156;
+        margin-top: 4px;
+    }
     .dropdown-menu {
         left: -55px !important;
+    }
+    .flex {
+        display: flex;
     }
     .sender {
         background: #dcf8c6;
