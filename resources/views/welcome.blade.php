@@ -81,6 +81,7 @@
                 <div class="container">
                     <h1>Секретный ЧАТ</h1>
                     <h3>by ilgiz</h3>
+                    <h5 style="margin-top: 100px">v1.0.0</h5>
                 </div>
             </div>
         </div>
