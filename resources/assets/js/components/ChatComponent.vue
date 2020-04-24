@@ -40,14 +40,14 @@
             close(friend) {
                 friend.session.open = false
             },
-            sendNotification(title, options) {
+            sendNotification(title, options, friend) {
                 if (!("Notification" in window)) {
                     alert('Ваш браузер не поддерживает HTML Notifications, его необходимо обновить.');
                 } else if (Notification.permission === "granted") {
                     var notification = new Notification(title, options);
                     function clickFunc() {
                         window.open('https://ilgizkar.ru/home', '_blank');
-                        this.close();
+                        this.openChat(friend);
                     }
                     notification.onclick = clickFunc;
                 } else if (Notification.permission !== 'denied') {
@@ -92,9 +92,9 @@
                         this.audioNotyPlay();
                         this.sendNotification('Новое сообщение!', {
                             body: 'Кликните сюда для перехода к ilgizkar.ru',
-                            icon: '/resources/assets/js/components/notification.png',
+                            icon: 'https://yt3.ggpht.com/a/AATXAJxbAAPqZhYxp2agXMNBBmXqPo75xP9frYGduQ=s900-c-k-c0xffffffff-no-rj-mo',
                             dir: 'auto'
-                        });
+                        }, friend);
                     }
                 });
             },
