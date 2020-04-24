@@ -54,7 +54,11 @@
                     Notification.requestPermission(function (permission) {
                         if (permission === "granted") {
                             var notification = new Notification(title, options);
-
+                            function clickFunc() {
+                                window.open('https://ilgizkar.ru/home', '_blank');
+                                this.close();
+                            }
+                            notification.onclick = clickFunc;
                         } else {
                             alert('Вы запретили показывать уведомления');
                         }
@@ -88,7 +92,7 @@
                         this.audioNotyPlay();
                         this.sendNotification('Новое сообщение!', {
                             body: 'Кликните сюда для перехода к ilgizkar.ru',
-                            icon: 'notification.png',
+                            icon: '/resources/assets/js/components/notification.png',
                             dir: 'auto'
                         });
                     }
