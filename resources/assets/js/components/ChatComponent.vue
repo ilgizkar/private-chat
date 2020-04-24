@@ -91,7 +91,7 @@
                         console.log(friend.session);
                         this.audioNotyPlay();
                         this.sendNotification('Вот это поворот!', {
-                            body: 'Тебе кто то написал))',
+                            body: 'Неужели тебе кто то написал))',
                             icon: 'https://yt3.ggpht.com/a/AATXAJxbAAPqZhYxp2agXMNBBmXqPo75xP9frYGduQ=s900-c-k-c0xffffffff-no-rj-mo',
                             dir: 'auto'
                         });
