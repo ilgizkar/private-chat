@@ -10,6 +10,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/cabinet', 'CabinetController@index')->name('cabinet');
 Route::get('/game', 'CabinetController@game')->name('game');
 
+
+Route::post('/cabinet/show', 'CabinetController@show');
+Route::post('/cabinet/save', 'CabinetController@save');
+Route::post('/cabinet/remove', 'CabinetController@remove');
+Route::post('/cabinet/avatar', 'CabinetController@avatar');
+
 Route::post('/getFriends', 'HomeController@getFriends');
 Route::post('/session/create', 'SessionController@create');
 Route::post('/session/{session}/chats', 'ChatController@chats');
