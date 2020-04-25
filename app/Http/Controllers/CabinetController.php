@@ -15,4 +15,9 @@ class CabinetController extends Controller
     {
         return view('cabinet');
     }
+
+    public function game()
+    {
+        return view('game');
+    }
 }

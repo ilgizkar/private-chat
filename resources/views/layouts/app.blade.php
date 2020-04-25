@@ -47,6 +47,12 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
+                        <a class="dropdown-item" href="{{ route('home') }}">
+                            Чат
+                        </a>
+                        <a class="dropdown-item" href="{{ route('game') }}">
+                            Суперигра
+                        </a>
                         <a class="dropdown-item" href="{{ route('cabinet') }}">
                             Личный кабинет
                         </a>
