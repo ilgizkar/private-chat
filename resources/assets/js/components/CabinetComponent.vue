@@ -169,6 +169,12 @@
         background: #F1F3FA;
     }
 
+    @media screen and (max-device-width: 480px) {
+        .profile-userpic img {
+            margin: 0 30% !important;
+        }
+    }
+
     .add-ava {
         margin-bottom: 20px;
         width: inherit;
