@@ -78,15 +78,7 @@
                 return this.session.blocked_id == auth.id;
             },
             src () {
-               if(this.avatar) {
-                    return this.avatar;
-               } else {
-                    if(this.gender === 0) {
-                        return this.manAva;
-                    } else {
-                        return this.womanAva;
-                    }
-               }
+              return this.avatar
             }
         },
         watch: {
@@ -146,6 +138,14 @@
             axios.post(`/session/${this.friend.session.id}/user`).then(res => {
                 this.gender = res.data.data.gender;
                 this.avatar = res.data.data.avatar ? '/storage/' + res.data.data.avatar : '';
+
+                if(!this.avatar) {
+                    if(this.gender === 0) {
+                        this.avatar = this.manAva;
+                    } else {
+                        this.avatar = this.womanAva;
+                    }
+                }
             });
 
             this.getAllMessages();
