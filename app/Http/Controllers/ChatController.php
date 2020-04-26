@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Events\MsgReadEvent;
 use App\Events\PrivateChatEvent;
 use App\Http\Resources\ChatResource;
+use App\Http\Resources\UserResource;
 use App\Models\Session;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
@@ -49,6 +51,17 @@ class ChatController extends Controller
         $session->chats->count() == 0 ? $session->deleteMessages() : '';
         return response('cleared', 200);
 
+    }
+
+    public function userf(Session $session)
+    {
+        $res[] = $session->user1_id;
+        $res[] = $session->user2_id;
+        foreach ($res as $r) {
+            if($r != auth()->id()){
+                return new UserResource(User::where('id', $r)->first());
+            }
+        }
     }
 
 }

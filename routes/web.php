@@ -19,6 +19,7 @@ Route::post('/cabinet/avatar', 'CabinetController@avatar');
 Route::post('/getFriends', 'HomeController@getFriends');
 Route::post('/session/create', 'SessionController@create');
 Route::post('/session/{session}/chats', 'ChatController@chats');
+Route::post('/session/{session}/user', 'ChatController@userf');
 Route::post('/session/{session}/read', 'ChatController@read');
 Route::post('/session/{session}/clear', 'ChatController@clear');
 Route::post('/session/{session}/block', 'BlockController@block');

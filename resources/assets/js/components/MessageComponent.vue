@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-1 avatar">
                     <div class="heading-avatar-icon">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png">
+                        <img :src="src">
                     </div>
                 </div>
                 <div class="col-md-5 user-name">
@@ -63,7 +63,11 @@
             return {
                 chats: [],
                 message: null,
-                isTyping: false
+                isTyping: false,
+                manAva: 'https://bootdey.com/img/Content/avatar/avatar6.png',
+                womanAva: 'https://www.bootdey.com/img/Content/avatar/avatar5.png',
+                avatar: '',
+                gender: 0
             }
         },
         computed: {
@@ -72,6 +76,17 @@
             },
             can() {
                 return this.session.blocked_id == auth.id;
+            },
+            src () {
+               if(this.avatar) {
+                    return this.avatar;
+               } else {
+                    if(this.gender === 0) {
+                        return this.manAva;
+                    } else {
+                        return this.womanAva;
+                    }
+               }
             }
         },
         watch: {
@@ -127,6 +142,11 @@
         },
         created() {
             this.read();
+
+            axios.post(`/session/${this.friend.session.id}/user`).then(res => {
+                this.gender = res.data.data.gender;
+                this.avatar = res.data.data.avatar ? '/storage/' + res.data.data.avatar : '';
+            });
 
             this.getAllMessages();
 
