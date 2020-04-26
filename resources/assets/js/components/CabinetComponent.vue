@@ -7,7 +7,9 @@
             <div class="col-md-3" style="margin-bottom: 25px;">
                 <div class="profile-sidebar">
                     <div class="profile-userpic">
-                        <img :src="src" class="img-responsive" alt="">
+                        <a data-fancybox="gallery" :href="src">
+                            <img :src="src" class="img-responsive" alt="">
+                        </a>
                     </div>
                     <div class="profile-usertitle">
                         <div class="profile-usertitle-name">

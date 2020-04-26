@@ -5,7 +5,9 @@
             <div class="row">
                 <div class="col-md-1 avatar">
                     <div class="heading-avatar-icon">
-                        <img :src="src">
+                        <a data-fancybox="gallery" :href="src">
+                            <img :src="src">
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-5 user-name">
