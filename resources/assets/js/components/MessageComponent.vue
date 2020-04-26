@@ -67,7 +67,7 @@
                 manAva: 'https://bootdey.com/img/Content/avatar/avatar6.png',
                 womanAva: 'https://www.bootdey.com/img/Content/avatar/avatar5.png',
                 avatar: '',
-                gender: 0
+                gender: ''
             }
         },
         computed: {
