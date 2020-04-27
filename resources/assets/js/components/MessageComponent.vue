@@ -1,5 +1,6 @@
 <template>
-    <div class="card card-default chat-box">
+    <div>
+        <div class="card card-default chat-box">
         <div class="device-md visible-md"></div>
         <div class="card-header">
             <div class="row">
@@ -55,6 +56,8 @@
                 <i class="fa fa-send fa-2x" @click.prevent="send" title="Отправить" aria-hidden="true"></i>
             </div>
         </form>
+    </div>
+
     </div>
 </template>
 
