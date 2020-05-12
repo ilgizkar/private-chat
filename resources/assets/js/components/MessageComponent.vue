@@ -44,7 +44,7 @@
         <form class="card-footer flex" @submit.prevent="send">
             <div class="form-group" style="width: 100%">
                 <input type="text" class="form-control" placeholder="Введите текст сообщения"
-                :disabled="session.block == 1" v-model="message">
+                :disabled="session.block == 1" v-model.trim="message">
             </div>
             <div class="ml15">
                 <i class="fa fa-send fa-2x" @click.prevent="send" title="Отправить" aria-hidden="true"></i>
@@ -93,7 +93,7 @@
         },
         methods: {
             send() {
-                if(this.message) {
+                if(this.message && this.message != " ") {
                     this.pushToChats(this.message);
                     axios.post(`/send/${this.friend.session.id}`, {
                         contents: this.message,
