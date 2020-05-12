@@ -38,13 +38,7 @@
         </div>
         <div class="card-body" v-chat-scroll>
             <div class="card-text" v-for="chat in chats" :key="chat.id">
-                <p :class="{'sender': chat.type == 0, 'to-user': chat.type == 1}">
-                    {{ chat.message }}
-                    <br>
-                    <span style="font-size: 8px;" v-if="chat.read_at">{{ chat.read_at }}</span>
-                    <span style="font-size: 8px;" v-else>1 second ago</span>
-                    <i class="fa fa-check float-right" title="Прочитанно" v-if="chat.type == 0 && chat.read_at != null" style="margin-top: 7px;" aria-hidden="true"></i>
-                </p>
+                <only-message :message=chat></only-message>
             </div>
         </div>
         <form class="card-footer flex" @submit.prevent="send">
@@ -62,7 +56,9 @@
 </template>
 
 <script>
+    import OnlyMessage from "./OnlyMessage";
     export default {
+        components: {OnlyMessage},
         props: ['friend'],
         data() {
             return {
@@ -204,37 +200,8 @@
         display: flex;
         padding-bottom: 0;
     }
-    .sender {
-        background: #dcf8c6;
-        min-width: 200px;
-        max-width: 500px;
-        float: right;
-        padding: 4px 10px 7px !important;
-        text-shadow: 0 0px 1px rgba(0, 0, 0, .2);
-        border-radius: 10px 10px 0 10px;
-        min-height: 50px;
-        box-shadow: 0 0 12px rgb(171, 165, 165);
-        color: #308052;
-    }
-    .to-user {
-        background: white;
-        width: max-content;
-        min-width: 200px;
-        max-width: 500px;
-        text-shadow: 0 0px 1px rgba(0, 0, 0, .2);
-        padding: 4px 10px 7px !important;
-        border-radius: 10px 10px 10px 0;
-        min-height: 50px;
-        box-shadow: 0 0 12px rgb(171, 165, 165);
-        color: #908585;
-    }
+
     @media screen and (max-device-width: 480px) {
-        .to-user {
-            max-width: 200px;
-        }
-        .sender {
-            max-width: 200px;
-        }
         .user-name {
             width: 55%;
         }
