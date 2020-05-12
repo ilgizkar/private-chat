@@ -4,7 +4,7 @@
         <br>
         <span style="font-size: 8px;" v-if="message.read_at">{{ message.read_at }}</span>
         <span style="font-size: 8px;" v-else>1 second ago</span>
-        <a href="#" @click.prevent="getApi"><i class="fa fa-globe float-right" title="Перевести" v-if="message.type == 1" style="margin-top: 7px;" aria-hidden="true"></i></a>
+        <a href="#" v-if="message.type == 1 && !isCyrillic" @click.prevent="getApi"><i class="fa fa-globe float-right" title="Перевести" style="margin-top: 7px;" aria-hidden="true"></i></a>
         <i class="fa fa-check float-right" title="Прочитанно" v-if="message.type == 0 && message.read_at != null" style="margin-top: 7px;" aria-hidden="true"></i>
     </p>
 </template>
@@ -12,13 +12,18 @@
 <script>
     export default {
         props: ['message'],
+        computed: {
+            isCyrillic() {
+                return /[а-я]/i.test(this.message.message);
+            }
+        },
         methods: {
             getApi(){
                 axios.post('https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20200512T071123Z.0a6c82afec51bbeb.a9c13582c16c3b192a600cbce956360bdb357b98&text='+ this.message.message +'&lang=en-ru')
                     .then(res => {
                         this.message.message = res.data.text[0]
                     })
-            },
+            }
         }
     }
 </script>
