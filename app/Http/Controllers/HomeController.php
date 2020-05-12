@@ -35,4 +35,11 @@ class HomeController extends Controller
     {
         return UserResource::collection(User::where('id', '!=', auth()->id())->get());
     }
+
+    public function addVkId(Request $request)
+    {
+        User::where('id', auth()->id())->update(['vk_id' => $request->vk_id, 'vk_status' => $request->status]);
+
+        return response('Saved', 200);
+    }
 }

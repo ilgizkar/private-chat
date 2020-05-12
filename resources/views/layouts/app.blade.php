@@ -25,6 +25,9 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <!-- vk scripts -->
+    <script src="https://vk.com/js/api/openapi.js?168" type="text/javascript"></script>
+    <script src="https://vk.com/js/api/xd_connection.js?2"  type="text/javascript"></script>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>

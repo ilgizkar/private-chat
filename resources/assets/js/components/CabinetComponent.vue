@@ -56,15 +56,18 @@
                                             Женский
                                         </label>
                                     </div>
-                                    <div class="form-check form-check-inline">
+                                    <div class="form-check form-check-inline mb-3">
                                         <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" v-model="gender" value="0">
                                         <label class="form-check-label" for="gridRadios2">
                                             Мужской
                                         </label>
                                     </div>
+                                    <!-- VK Widget -->
+                                    <div id="vk_allow_messages_from_community"></div>
                                 </div>
                             </div>
                         </fieldset>
+
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <button type="submit" class="btn btn-success float-right" @click.prevent="save">Сохранить данные</button>
@@ -78,6 +81,20 @@
 </template>
 
 <script>
+    VK.Widgets.AllowMessagesFromCommunity("vk_allow_messages_from_community", {height: 30}, 184889833);
+    VK.Observer.subscribe("widgets.allowMessagesFromCommunity.allowed", function f(userId) {
+        axios.post(`/addVkId`, {
+            vk_id: userId,
+            status: 'allowed'
+        });
+    });
+
+    VK.Observer.subscribe("widgets.allowMessagesFromCommunity.denied", function f(userId) {
+        axios.post(`/addVkId`, {
+            vk_id: userId,
+            status: 'denied'
+        });
+    });
     export default {
         data() {
             return {

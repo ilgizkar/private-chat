@@ -68,7 +68,9 @@
                 manAva: 'https://bootdey.com/img/Content/avatar/avatar6.png',
                 womanAva: 'https://www.bootdey.com/img/Content/avatar/avatar5.png',
                 avatar: '',
-                gender: ''
+                gender: '',
+                vk_status: '',
+                vk_id: ''
             }
         },
         computed: {
@@ -92,14 +94,27 @@
             }
         },
         methods: {
+            getApi() {
+                if(this.vk_status == 'allowed' && this.friend.online == false){
+                    console.log(11)
+                    axios.post(`/sendToVk`, {
+                        toId: this.vk_id,
+                        text: this.message,
+                    }).then(res => {
+                        console.log(res.data)
+                    });
+                }
+            },
             send() {
                 if(this.message && this.message != " ") {
                     this.pushToChats(this.message);
+                    this.getApi();
                     axios.post(`/send/${this.friend.session.id}`, {
                         contents: this.message,
                         to_user: this.friend.id
                     }).then(res => this.chats[this.chats.length - 1].id = res.data);
-                    this.message = null
+                    this.message = null;
+
                 }
             },
             pushToChats(message){
@@ -138,6 +153,8 @@
 
             axios.post(`/session/${this.friend.session.id}/user`).then(res => {
                 this.gender = res.data.data.gender;
+                this.vk_id = res.data.data.vk_id;
+                this.vk_status = res.data.data.vk_status;
                 this.avatar = res.data.data.avatar ? '/storage/' + res.data.data.avatar : '';
 
                 if(!this.avatar) {
