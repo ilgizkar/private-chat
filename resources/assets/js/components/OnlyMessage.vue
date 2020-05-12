@@ -2,8 +2,8 @@
     <p :class="{'sender': message.type == 0, 'to-user': message.type == 1}">
         {{ message.message }}
         <br>
-        <span style="font-size: 8px;" v-if="message.read_at">{{ message.read_at }}</span>
-        <span style="font-size: 8px;" v-else>1 second ago</span>
+        <span style="font-size: 8px;" v-if="message.send_at">{{ message.send_at }}</span>
+        <span style="font-size: 8px;" v-else>1 секунду назад</span>
         <a href="#" v-if="message.type == 1 && !isCyrillic" @click.prevent="getApi"><i class="fa fa-globe float-right" title="Перевести" style="margin-top: 7px;" aria-hidden="true"></i></a>
         <i class="fa fa-check float-right" title="Прочитанно" v-if="message.type == 0 && message.read_at != null" style="margin-top: 7px;" aria-hidden="true"></i>
     </p>
