@@ -1,6 +1,6 @@
 <?php
 function cron() {
-    $token =env('VK_TOKEN');
+    $token = '0b9295c4d383cb0c4bb30332a01aa5cf4762afb777ab07c7371d43c98d95a49712750530d22921557b4e1';
 
     $message = 'Вам сообщение от sdfdfs: 
         
