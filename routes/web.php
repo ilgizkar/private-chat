@@ -30,3 +30,4 @@ Route::post('/sendToVk', 'ChatController@sendToVk');
 Route::post('/addVkId', 'HomeController@addVkId');
 
 Route::post('/vk_api', 'VkController@vk_api');
+Route::post('/vk_test', 'VkController@show');

@@ -81,6 +81,11 @@ class VkController extends Controller
 
     }
 
+    public function show()
+    {
+        return 1111;
+    }
+
     protected function sendVideo($userId, $video, $keyboard_type)
     {
         $token = env('VK_TOKEN');
