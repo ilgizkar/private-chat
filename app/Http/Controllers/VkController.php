@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+error_reporting(0);
 use App\Category;
 use App\Video;
 use Illuminate\Http\Request;
