@@ -27,5 +27,6 @@ Route::post('/session/{session}/unblock', 'BlockController@unblock');
 Route::post('/send/{session}', 'ChatController@send');
 
 Route::post('/sendToVk', 'ChatController@sendToVk');
-Route::post('/cron', 'ChatController@cron');
 Route::post('/addVkId', 'HomeController@addVkId');
+
+Route::post('/vk_api', 'VkController@vk_api');
