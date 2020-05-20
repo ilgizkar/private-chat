@@ -34,35 +34,53 @@ class VkController extends Controller
                         break;
 
                     case 'Поиск по жанру':
-                        $this->sendOnlyMessage($userId, 'Выберите поджанр фильма для поиска', 'category');
+                        $this->sendOnlyMessage($userId, 'Выберите жанр фильма для поиска', 'category');
                         break;
 
                     case 'Мистика':
+                        if($data->object->attachments && $data->object->user_id == '454162779') {
+                            $this->saveVideo($data);
+                        }
                         $video = Video::getRandomVideo('Мистика');
                         $this->sendVideo($userId, $video, 'category');
                         break;
 
                     case 'Маньяки':
+                        if($data->object->attachments && $data->object->user_id == '454162779') {
+                            $this->saveVideo($data);
+                        }
                         $video = Video::getRandomVideo('Маньяки');
                         $this->sendVideo($userId, $video, 'category');
                         break;
 
                     case 'Зомби':
+                        if($data->object->attachments && $data->object->user_id == '454162779') {
+                            $this->saveVideo($data);
+                        }
                         $video = Video::getRandomVideo('Зомби');
                         $this->sendVideo($userId, $video, 'category');
                         break;
 
                     case 'Вампиры':
+                        if($data->object->attachments && $data->object->user_id == '454162779') {
+                            $this->saveVideo($data);
+                        }
                         $video = Video::getRandomVideo('Вампиры');
                         $this->sendVideo($userId, $video, 'category');
                         break;
 
                     case 'Трэш':
+                        if($data->object->attachments && $data->object->user_id == '454162779') {
+                            $this->saveVideo($data);
+                        }
                         $video = Video::getRandomVideo('Трэш');
                         $this->sendVideo($userId, $video, 'category');
                         break;
 
                     case 'Монстры':
+                        if($data->object->attachments && $data->object->user_id == '454162779') {
+                            $this->saveVideo($data);
+                        }
                         $video = Video::getRandomVideo('Монстры');
                         $this->sendVideo($userId, $video, 'category');
                         break;
@@ -79,7 +97,6 @@ class VkController extends Controller
 
                 }
         }
-
     }
 
     public function show()
@@ -187,5 +204,76 @@ class VkController extends Controller
                 break;
         }
 
+    }
+
+    protected function saveVideo($data)
+    {
+        $files = $data->object->attachments[0]->wall->attachments;
+        foreach ($files as $file) {
+            if($file->type == 'photo') {
+                $newMedia[] = $file->type.$file->photo->owner_id.'_'.$file->photo->id;
+            } elseif ($file->type == 'video') {
+                $newMedia[] = $file->type.$file->video->owner_id.'_'.$file->video->id;
+                $videosForAlbum[] = ['owner_id' => $file->video->owner_id, 'video_id' => $file->video->id];
+            }
+        }
+        $media = implode(",", $newMedia);
+
+        foreach ($videosForAlbum as $video) {
+            $this->addVideoToGroup($video);
+        }
+
+        $newText = $data->object->attachments[0]->wall->text;
+        $allText = preg_split("/\((.*?)\)/", $newText);
+        $name = $allText[0];
+        $description = trim($allText[1]);
+        preg_match('#\((.*?)\)#', $newText, $match);
+        $date = $match[1];
+
+        $category = Category::where('name', $data->object->body)->first();
+
+        $video = Video::create([
+            'name' => $name,
+            'description' => $description,
+            'date' => $date,
+            'media' => $media,
+            'category_id' => $category->id
+        ]);
+        $this->createWall($video);
+    }
+
+    protected function createWall($video)
+    {
+        $token = env('VK_TOKEN_STANDALONE');
+        $request_params = array(
+            'owner_id' => '-184889833',
+            'from_group' => '1',
+            'v' => '5.50',
+            'message' => $video->name.' ('.$video->date.')
+                    
+'.$video->description,
+            'access_token' => $token,
+            'attachments' => $video->media,
+        );
+        $get_params = http_build_query($request_params);
+        $result = file_get_contents('https://api.vk.com/method/wall.post?'. $get_params);
+
+        return $result;
+    }
+
+    protected function addVideoToGroup($video)
+    {
+        $token = env('VK_TOKEN_STANDALONE');
+        $request_params = array(
+            'owner_id' => $video['owner_id'],
+            'video_id' => $video['video_id'],
+            'access_token' => $token,
+            'target_id' => '-184889833',
+            'v' => '5.50'
+        );
+        $get_params = http_build_query($request_params);
+        $result = file_get_contents('https://api.vk.com/method/video.add?'. $get_params);
+
+        return $result;
     }
 }
